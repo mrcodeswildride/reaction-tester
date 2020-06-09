@@ -1,37 +1,42 @@
-var page = document.getElementById("page");
-var messageDisplay = document.getElementById("message");
-var button = document.getElementById("button");
+let page = document.getElementById(`page`)
+let messageParagraph = document.getElementById(`messageParagraph`)
+let button = document.getElementById(`button`)
 
-var timerId = null;
-var changeColorTime = null;
+let gameStarted = false
+let pageChanged = false
+let pageChangedTime
+let timeoutId
 
-button.addEventListener("click", click);
+button.addEventListener(`click`, clickButton)
 
-function click() {
-    if (timerId == null) {
-        messageDisplay.innerHTML = "Click when the page is blue.";
-        button.innerHTML = "Stop";
-        var delay = Math.floor(Math.random() * 8000) + 2000;
-        timerId = setTimeout(changeColor, delay);
+function clickButton() {
+  if (gameStarted == false) {
+    messageParagraph.innerHTML = `Click when the page is blue.`
+
+    let delay = Math.floor(Math.random() * 8000) + 2000
+    timeoutId = setTimeout(changeColor, delay)
+
+    gameStarted = true
+  }
+  else {
+    if (pageChanged == false) {
+      messageParagraph.innerHTML = `You clicked too soon.`
+      clearTimeout(timeoutId)
     }
     else {
-        if (changeColorTime == null) {
-            clearTimeout(timerId);
-            messageDisplay.innerHTML = "You clicked too soon.";
-        }
-        else {
-            var reactionTime = Date.now() - changeColorTime;
-            messageDisplay.innerHTML = "Reaction: " + reactionTime + " milliseconds";
-        }
+      let reactionTime = Date.now() - pageChangedTime
+      messageParagraph.innerHTML = `Reaction: ${reactionTime} milliseconds`
 
-        page.style.backgroundColor = "";
-        button.innerHTML = "Start";
-        timerId = null;
-        changeColorTime = null;
+      page.style.backgroundColor = ``
+      pageChanged = false
     }
+
+    gameStarted = false
+  }
 }
 
 function changeColor() {
-    page.style.backgroundColor = "#add8e6";
-    changeColorTime = Date.now();
+  page.style.backgroundColor = `#add8e6`
+  pageChanged = true
+  pageChangedTime = Date.now()
 }
