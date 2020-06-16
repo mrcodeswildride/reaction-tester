@@ -3,7 +3,6 @@ let messageParagraph = document.getElementById(`messageParagraph`)
 let button = document.getElementById(`button`)
 
 let gameStarted = false
-let pageChanged = false
 let pageChangedTime
 let timeoutId
 
@@ -19,7 +18,7 @@ function clickButton() {
     gameStarted = true
   }
   else {
-    if (pageChanged == false) {
+    if (page.style.backgroundColor != `lightblue`) {
       messageParagraph.innerHTML = `You clicked too soon.`
       clearTimeout(timeoutId)
     }
@@ -28,7 +27,6 @@ function clickButton() {
       messageParagraph.innerHTML = `Reaction: ${reactionTime} milliseconds`
 
       page.style.backgroundColor = ``
-      pageChanged = false
     }
 
     gameStarted = false
@@ -36,7 +34,6 @@ function clickButton() {
 }
 
 function changeColor() {
-  page.style.backgroundColor = `#add8e6`
-  pageChanged = true
+  page.style.backgroundColor = `lightblue`
   pageChangedTime = Date.now()
 }
