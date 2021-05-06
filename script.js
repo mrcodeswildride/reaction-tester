@@ -16,13 +16,11 @@ function clickButton() {
     timeoutId = setTimeout(changeColor, delay)
 
     gameStarted = true
-  }
-  else {
+  } else {
     if (page.style.backgroundColor != `lightblue`) {
       messageParagraph.innerHTML = `You clicked too soon.`
       clearTimeout(timeoutId)
-    }
-    else {
+    } else {
       let reactionTime = Date.now() - pageChangedTime
       messageParagraph.innerHTML = `Reaction: ${reactionTime} milliseconds`
 
